@@ -1,11 +1,20 @@
 import React from 'react'
+import {connect} from 'react-redux';
+import BlogDetailsItem from './BlogDetailsItem';
 
-const BlogDetailsPage = ({match}) => {
+
+const BlogDetailsPage = (props) => {
     return (
-        <div>
-            Blog Details: {match.params.id}
-        </div>
+       <BlogDetailsItem {...props.blog} />
     )
 }
 
-export default BlogDetailsPage
+const mapStatetoProps = (state, props) => {
+    return {
+        blog: state.blogs.find((blog) => {
+            return blog.id === props.match.params.id
+        })
+    }
+}
+
+export default connect(mapStatetoProps)(BlogDetailsPage);
